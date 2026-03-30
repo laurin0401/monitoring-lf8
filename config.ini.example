@@ -1,0 +1,17 @@
+[settings]
+log_file = monitoring.log
+
+[limits]
+ram_softlimit      = 80.0
+ram_hardlimit      = 95.0
+disk_softlimit     = 80.0
+disk_hardlimit     = 95.0
+prozesse_softlimit = 150
+prozesse_hardlimit = 200
+
+[smtp]
+server    = smtp.gmail.com
+port      = 587
+user      = DEINE-EMAIL@gmail.com
+password  = DEIN-APP-PASSWORT
+recipient = EMPFAENGER@gmail.com
