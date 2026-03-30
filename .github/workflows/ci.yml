@@ -1,0 +1,99 @@
+name: CI/CD Pipeline - Server Monitoring
+
+# Pipeline startet automatisch bei jedem Commit/Push
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  # ─── QA-Maßnahme 1: Code-Qualität prüfen (Linting) ───
+  lint:
+    name: Code-Qualitätsprüfung (Linting)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Abhängigkeiten installieren
+        run: |
+          pip install flake8
+
+      - name: Linting mit flake8 ausführen
+        run: |
+          flake8 . --max-line-length=100 --exclude=.github
+
+  # ─── QA-Maßnahme 2: Sicherheitsprüfung ───
+  security:
+    name: Sicherheitsanalyse (Bandit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install bandit
+      - name: Sicherheitsscan ausführen
+        run: bandit -r . --exclude ./.github
+
+  # ─── Must-have: Unit Tests automatisiert ───
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    needs: lint        # Erst linten, dann testen
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Abhängigkeiten installieren
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Unit Tests ausführen
+        run: |
+          pytest tests/test_alarm.py -v
+
+      # ─── QA-Maßnahme 3: Code-Coverage prüfen ───
+      - name: Code-Coverage prüfen
+        run: |
+          pytest tests/ --cov=. --cov-report=xml --cov-fail-under=70
+
+  # ─── Should-have: Integrationstests ───
+  integration-tests:
+    name: Integrationstests
+    runs-on: ubuntu-latest
+    needs: unit-tests   # Erst Unit Tests, dann Integrationstests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt pytest
+      - name: Integrationstests ausführen
+        run: |
+          pytest tests/test_monitoring.py -v
+
+  # ─── Could-have: Continuous Deployment ───
+  deploy:
+    name: Deployment (Produktivumgebung)
+    runs-on: ubuntu-latest
+    needs: integration-tests
+    if: github.ref == 'refs/heads/main'   # Nur auf main-Branch
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deployment simulieren
+        run: |
+          echo "Deployment erfolgreich auf Produktivserver!"
+          echo "Version: ${{ github.sha }}"
