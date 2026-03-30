@@ -41,7 +41,7 @@ jobs:
           python-version: '3.11'
       - run: pip install bandit
       - name: Sicherheitsscan ausführen
-        run: bandit -r . --exclude ./.github, ./tests
+        run: bandit -r . -x ./.github,./.git,./tests
 
   # ─── Must-have: Unit Tests automatisiert ───
   unit-tests:
