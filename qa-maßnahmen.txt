@@ -1,5 +1,0 @@
-| # | Maßnahme           | Tool       | Zweck                                 |
-| - | ------------------ | ---------- | ------------------------------------- |
-| 1 | Linting            | flake8     | Einheitlicher, lesbarer Code-Stil     |
-| 2 | Sicherheitsanalyse | Bandit     | Erkennt unsichere Python-Muster       |
-| 3 | Code-Coverage      | pytest-cov | Mindestens 70% des Codes ist getestet |
