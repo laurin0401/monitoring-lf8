@@ -151,9 +151,6 @@ Die GitHub Actions Pipeline führt bei jedem Push automatisch aus:
 
 ---
 
-## 👥 Autoren
-
-- Laurin Hirtreiter
 
 
 
