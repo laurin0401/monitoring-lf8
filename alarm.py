@@ -90,3 +90,4 @@ def check_alarm(wert: float, softlimit: float, hardlimit: float, meldungstext: s
             f"[OK]       {meldungstext}: {wert} "
             f"(Softlimit: {softlimit}, Hardlimit: {hardlimit})"
         )
+        write_log(nachricht)
