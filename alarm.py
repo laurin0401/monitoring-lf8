@@ -82,9 +82,11 @@ def check_alarm(wert: float, softlimit: float, hardlimit: float, meldungstext: s
         )
 
     elif wert >= softlimit:
-        nachricht = f"[WARNUNG]  {meldungstext}: {wert} (Softlimit: {softlimit})"
+        nachricht = f"[WARNUNG] {meldungstext}: {wert} (Softlimit: {softlimit})"
         write_log(nachricht)
 
     else:
-        nachricht = f"[OK]       {meldungstext}: {wert} (Softlimit: {softlimit}, Hardlimit: {hardlimit})"
-        write_log(nachricht)
+                nachricht = (
+            f"[OK]       {meldungstext}: {wert} "
+            f"(Softlimit: {softlimit}, Hardlimit: {hardlimit})"
+        )
