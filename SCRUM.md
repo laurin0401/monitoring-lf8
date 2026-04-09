@@ -45,7 +45,7 @@ gleichberechtigt – es gibt keine Hierarchie innerhalb des Entwicklungsteams.
 |---------|-----------|----------------|-----------|--------|
 | GitHub Repository einrichten | Hoch | Laurin | 1h | ✅ Fertig |
 | alarm.py entwickeln | Hoch | Laurin | 4h | ✅ Fertig |
-| monitoring.py entwickeln | Hoch | Laurin | 4h | ✅ Fertig |
+| monitoring.py entwickeln | Hoch | Waleed | 4h | ✅ Fertig |
 | config.ini erstellen | Mittel | Ahmed | 1h | ✅ Fertig |
 | Anforderungen analysieren (MoSCoW) | Hoch | Tim | 2h | ✅ Fertig |
 
@@ -71,7 +71,7 @@ gleichberechtigt – es gibt keine Hierarchie innerhalb des Entwicklungsteams.
 | Sequenzdiagramm erstellen | Mittel | Markuss | 1h | ✅ Fertig |
 | Dokumentation Teil 3 (Scrum) | Hoch | Tim | 2h | ✅ Fertig |
 | Dokumentation Teil 4 (Open Source) | Hoch | Tim | 2h | ✅ Fertig |
-| Abgabe vorbereiten | Hoch | Tim | 1h | ✅ Fertig |
+| Abgabe vorbereiten | Hoch | Ahmed | 1h | ✅ Fertig |
 
 ---
 
