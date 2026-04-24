@@ -1,9 +1,5 @@
-# Projektdokumentation – Server Monitoring System
+# Projektdokumentation – Daten systemübergreifend bereitstellen
 
-**Ausbildungsbereich:** Fachinformatik / Anwendungsentwicklung  
-**Auftraggeber:** IT-Solutions  
-**Abgabedatum:** April 2026  
-**Bearbeiterin:** Joanna Casper
 
 ---
 
@@ -46,12 +42,6 @@ Bei Überschreitung des Softlimits wird eine Warnung in eine Logdatei geschriebe
 ### 1.3 Projektbegründung
 
 Eine frühzeitige Fehlererkennung in Serverumgebungen verhindert ungeplante Ausfälle und reduziert den manuellen Überwachungsaufwand. Durch ein automatisiertes Monitoring-System kann der Administrator sofort auf kritische Zustände reagieren, ohne dauerhaft manuell prüfen zu müssen. Die Einbindung in eine CI/CD-Pipeline stellt außerdem die kontinuierliche Codequalität sicher.
-
-### 1.4 Projektabgrenzung
-
-- Die visuelle Darstellung der Messdaten (Dashboard/Frontend) ist **nicht** Bestandteil dieses Projekts.
-- Die dauerhafte Betrieb in einer Produktivumgebung ist ein optionaler Aspekt (Could have).
-- Schulungen für Endanwender sind nicht vorgesehen.
 
 ---
 
@@ -128,7 +118,7 @@ Die Module kommunizieren über direkte Funktionsaufrufe. Konfigurationswerte (Sc
 
 Das folgende Klassendiagramm zeigt die Struktur der beiden Module sowie ihre Abhängigkeiten zu externen Klassen:
 
-*(Klassendiagramm: siehe Anhang A.1)*
+*(Klassendiagramm)*
 
 ### 4.4 Maßnahmen zur Qualitätssicherung
 
@@ -142,7 +132,7 @@ Folgende drei QA-Maßnahmen wurden implementiert:
 
 Das Sequenzdiagramm zeigt den vollständigen Ablauf vom `git push` bis zum Deployment:
 
-*(Sequenzdiagramm: siehe Anhang A.2)*
+*(Sequenzdiagramm)*
 
 ---
 
@@ -233,35 +223,10 @@ Für die Pipeline und Software wurden ausschließlich **Open-Source-Lösungen** 
 
 ---
 
-## 7. Iterativer Softwarelebenszyklus (Scrum)
 
-### 7.1 Scrum-Rollen
+## 7. Fazit
 
-| Rolle | Person | Beschreibung |
-|-------|--------|-------------|
-| Product Owner | Lehrerteam | Definiert Anforderungen (MoSCoW), nimmt ab |
-| Scrum Master | — | Nicht explizit besetzt (Einzelprojekt) |
-| Developer | Joanna Casper | Planung, Implementierung, Tests, Dokumentation |
-
-### 7.2 Sprint-Planung
-
-Die Entwicklung wurde in **wöchentliche Sprints** unterteilt. Aufgaben wurden als GitHub Issues angelegt und dem Sprint-Board zugewiesen. Am Ende jedes Sprints fand eine kurze Retrospektive statt:
-
-- **Sprint 1:** Anforderungsanalyse, SDLC-Planung, Pipeline-Grundgerüst
-- **Sprint 2:** Implementierung alarm.py, erste Unit Tests
-- **Sprint 3:** Implementierung monitoring.py, INI-Konfiguration
-- **Sprint 4:** QA-Maßnahmen, Integrationstests, Fehlerbehebung
-- **Sprint 5:** Dokumentation, finaler Review, Abgabe
-
-### 7.3 Retrospektive
-
-Im Verlauf des Projekts zeigte sich, dass die flake8-Konformität frühzeitig beachtet werden sollte, um spätere Korrekturen (z. B. Zeilenlängen, Einrückungsfehler) zu vermeiden. Die INI-Datei erwies sich als sinnvolle Ergänzung, da sie die Flexibilität bei der Konfiguration erhöht, ohne den Code zu ändern.
-
----
-
-## 8. Fazit
-
-### 8.1 Soll-Ist-Vergleich
+### 7.1 Soll-Ist-Vergleich
 
 Alle Must-have- und Should-have-Anforderungen wurden erfolgreich umgesetzt. Die optionalen Could-have-Anforderungen (Continuous Deployment, plattformübergreifende Tests) wurden ebenfalls implementiert.
 
@@ -277,13 +242,13 @@ Alle Must-have- und Should-have-Anforderungen wurden erfolgreich umgesetzt. Die 
 | Mindestens 3 QA-Maßnahmen | ✅ Umgesetzt (flake8, Bandit, pytest-cov) |
 | 5 automatisierte Tests | ✅ Umgesetzt (5 Unit + 7 Integrationstests) |
 
-### 8.2 Lessons Learned
+### 7.2 Lessons Learned
 
 - **Frühzeitiges Linting** spart Zeit: flake8 sollte von Beginn an lokal ausgeführt werden, bevor ein Commit erfolgt.
 - **Modulare Struktur** zahlt sich aus: Die Trennung von `alarm.py` und `monitoring.py` vereinfachte das Testen erheblich.
 - **INI-Datei** ist flexibler als Hardcoded-Werte: Schwellenwerte lassen sich ohne Code-Änderungen anpassen.
 
-### 8.3 Ausblick
+### 7.3 Ausblick
 
 Das System könnte in einer nächsten Iteration um folgende Funktionen erweitert werden:
 - Visuelle Darstellung der Messdaten (Web-Dashboard)
@@ -291,48 +256,3 @@ Das System könnte in einer nächsten Iteration um folgende Funktionen erweitert
 - Containerisierung mit Docker für einfaches Deployment
 
 ---
-
-## Anhang
-
-### A.1 Klassendiagramm
-
-*(Klassendiagramm – alarm.py, monitoring.py, ConfigINI, LogDatei, SMTPServer, psutil)*
-
-### A.2 Sequenzdiagramm CI/CD-Pipeline
-
-*(Sequenzdiagramm – Entwickler → GitHub → CI → QA → Produktivumgebung)*
-
-### A.3 Verwendete Ressourcen
-
-| Ressource | Version | Typ |
-|-----------|---------|-----|
-| Python | 3.11 | Open Source |
-| psutil | 5.9 | Open Source (Python-Bibliothek) |
-| pytest | 7.x | Open Source |
-| flake8 | 6.x | Open Source |
-| Bandit | 1.7 | Open Source |
-| pytest-cov | 4.x | Open Source |
-| GitHub Actions | — | Freemium |
-| Visual Studio Code | 1.88 | Freemium |
-
-### A.4 config.ini (Vollständiges Beispiel)
-
-```ini
-[settings]
-log_file = monitoring.log
-
-[limits]
-ram_softlimit = 80
-ram_hardlimit = 90
-disk_softlimit = 80
-disk_hardlimit = 95
-prozesse_softlimit = 150
-prozesse_hardlimit = 200
-
-[smtp]
-server = smtp.gmail.com
-port = 587
-user = monitoring@example.com
-password = passwort123
-recipient = admin@example.com
-```
